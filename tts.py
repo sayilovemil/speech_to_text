@@ -1,16 +1,13 @@
 import speech_recognition as sr
-
-# obtain path to "file.extention" in the same folder as this script
-from os import path
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "Testament.wav")
-
-# use the audio file as the audio source
 r = sr.Recognizer()
 
 i = 0
-with sr.AudioFile(AUDIO_FILE) as source:
-    while i < 803:
-        audio = r.record(source, duration = 240)  # read the entire audio file
-        texte = r.recognize_google(audio, language= "fr-FR")
+with sr.WavFile("Testament.wav") as source:       
+      while i < 800:
+        audio = r.record(source, duration = 240)                                  # reading the entire audio file from a wav file
+        texte = r.recognize_google(audio, language= "fr-FR")                      # recording the entire audio file in French
         print(texte)
+        file = open('transcription.txt', 'a')                                     # appending the transcripted audio file in a txt file
+        file.write(texte) 
+        file.close() 
         i+=240
